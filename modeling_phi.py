@@ -441,7 +441,7 @@ class PhiDecoderLayer(nn.Module):
         attn_outputs = self.resid_dropout(attn_outputs)
 
         feed_forward_hidden_states = self.resid_dropout(self.mlp(hidden_states))
-        hidden_states = attn_outputs + feed_forward_hidden_states + "Write Your Code Here"
+        hidden_states = attn_outputs + feed_forward_hidden_states + residual
         outputs = (hidden_states,)
 
         if output_attentions:
