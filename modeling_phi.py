@@ -249,9 +249,9 @@ class PhiAttention(nn.Module):
                 f" and `num_heads`: {self.num_heads})."
             )
 
-        self.q_proj = nn.Linear("Write Your Code Here", self.num_heads * self.head_dim, bias=True)
-        self.k_proj = nn.Linear("Write Your Code Here", self.num_key_value_heads * self.head_dim, bias=True)
-        self.v_proj = nn.Linear("Write Your Code Here", self.num_key_value_heads * self.head_dim, bias=True)
+        self.q_proj = nn.Linear(self.hidden_size, self.num_heads * self.head_dim, bias=True)
+        self.k_proj = nn.Linear(self.hidden_size, self.num_key_value_heads * self.head_dim, bias=True)
+        self.v_proj = nn.Linear(self.hidden_size, self.num_key_value_heads * self.head_dim, bias=True)
         self.dense = nn.Linear(self.num_heads * self.head_dim, "Write Your Code Here", bias=True)
 
         self.qk_layernorm = config.qk_layernorm
@@ -351,7 +351,7 @@ class PhiAttention(nn.Module):
 
         # Queries and keys upcast to fp32 is required by Phi-2 to avoid overflow
         attn_weights = torch.matmul(
-            "Write Your Code Here", "Write Your Code Here"
+           query_states.to(torch.float32), key_states.to(torch.float32).transpose(2,3)
         ) / math.sqrt(self.head_dim)
 
         if attn_weights.size() != (bsz, self.num_heads, q_len, kv_seq_len):
